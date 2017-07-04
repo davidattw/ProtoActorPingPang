@@ -8,8 +8,16 @@ import (
 
 type Hello struct{ Who string }
 type PingActor struct{}
+type PongActor struct{}
 
 func (state *PingActor) Receive(context actor.Context) {
+	switch msg := context.Message().(type) {
+	case Hello:
+		fmt.Printf("Hello %v\n", msg.Who)
+	}
+}
+
+func (state *PongActor) Revive(context actor.Context) {
 	switch msg := context.Message().(type) {
 	case Hello:
 		fmt.Printf("Hello %v\n", msg.Who)
