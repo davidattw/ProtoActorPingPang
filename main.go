@@ -1,15 +1,15 @@
-package protoActorPingPang
+package main
 
 import (
-	"github.com/AsynkronIT/protoactor-go/actor"
 	"fmt"
+	"github.com/AsynkronIT/protoactor-go/actor"
 	"github.com/AsynkronIT/goconsole"
 )
 
 type Hello struct{ Who string }
-type HelloActor struct{}
+type PingActor struct{}
 
-func (state *HelloActor) Receive(context actor.Context) {
+func (state *PingActor) Receive(context actor.Context) {
 	switch msg := context.Message().(type) {
 	case Hello:
 		fmt.Printf("Hello %v\n", msg.Who)
@@ -17,7 +17,7 @@ func (state *HelloActor) Receive(context actor.Context) {
 }
 
 func main() {
-	props := actor.FromInstance(&HelloActor{})
+	props := actor.FromInstance(&PingActor{})
 	pid := actor.Spawn(props)
 	pid.Tell(Hello{Who: "Roger"})
 	console.ReadLine()
